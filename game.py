@@ -27,9 +27,16 @@ class Game:
         if self.choice in "1234":
             print(text.choice_stack[int(self.choice)-1])
             print()
-            if self.choice in "123":
+            if self.choice == "1":
+                self.exercise(player)
                 self.turns_to_monster -= 1
-            if self.choice == "4":
+            if self.choice == "2":
+                self.eat(player)
+                self.turns_to_monster -= 1
+            if self.choice == "3":
+                self.sleep(player)
+                self.turns_to_monster -= 1
+            elif self.choice == "4":
                 player.display_stats()
         else:
             print("invalid choice")
