@@ -16,7 +16,7 @@ class Game:
         self.create_creature()
 
     def gym(self, player):
-        for i in len(self.creatures):
+        for i in range(len(self.creatures)):
             print(f"{i + 1}:{self.creatures[i].get_name()}")
         battle_choice = input("Which Pokemon would you like to battle?\n")
         if battle_choice in "123":
