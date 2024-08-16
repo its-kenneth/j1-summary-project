@@ -26,9 +26,8 @@ class Move:
     def get_current_power(self):
         return self.current_power
 
+    def can_use(self):
+        return self.current_power > 0
+        
     def used_moves(self):
         self.current_power -= 1
-        if self.current_power == 0:
-            return False
-        else:
-            return True 
