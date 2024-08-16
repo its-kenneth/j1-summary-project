@@ -1,6 +1,4 @@
-from player import Player
 import sys
-import random
 import text
 
 class Game:
@@ -30,14 +28,19 @@ class Game:
             if self.choice == "1":
                 self.exercise(player)
                 self.turns_to_monster -= 1
-            if self.choice == "2":
+            elif self.choice == "2":
                 self.eat(player)
                 self.turns_to_monster -= 1
-            if self.choice == "3":
+            elif self.choice == "3":
                 self.sleep(player)
                 self.turns_to_monster -= 1
+            elif self.choice == "6":
+                self.gym(player) #@Manuel
+                self.turns_to_monster -= 1
             elif self.choice == "4":
-                player.display_stats()
+                player.display_stats() 
+            elif self.choice == "5":
+                player.display_moves() #@Manuel
         else:
             print("invalid choice")
             self.display_options()
