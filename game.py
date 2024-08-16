@@ -5,6 +5,7 @@ import text
 
 class Game:
     def __init__(self):
+        
         self.turns_to_monster = 10
 
     def start(self, player):
@@ -13,7 +14,7 @@ class Game:
     def display_options(self): # change later
         print(f"Turns to monster: {self.turns_to_monster}")
         for i in range(len(text.option_stack)):
-            print(f"{i}: {text.option_stack}")
+            print(f"{i+1}. {text.option_stack[i]}")
         
     def option_input(self):
         option = input("Enter an option: ")
@@ -25,6 +26,7 @@ class Game:
     def do(self, player): # changer later also
         if self.choice in "1234":
             print(text.choice_stack[int(self.choice)-1])
+            print()
             if self.choice in "123":
                 self.turns_to_monster -= 1
             if self.choice == "4":
