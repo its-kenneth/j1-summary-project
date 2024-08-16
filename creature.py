@@ -1,7 +1,8 @@
 from character import Character
 
 class Creature(Character):
-    def __init__(self, move_dropped):
+    def __init__(self, name, hp, attack, move_dropped):
+        super().__init__(name, hp, attack)
         self.move_dropped = move_dropped
             
     
