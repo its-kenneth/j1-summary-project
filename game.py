@@ -33,7 +33,6 @@ class Game:
     def do(self, player): # changer later also
         if self.choice in "123456":
             print(text.choice_stack[int(self.choice)-1])
-            print()
             if self.choice == "1":
                 self.exercise(player)
                 self.turns_to_monster -= 1
@@ -50,6 +49,7 @@ class Game:
                 player.display_stats() 
             elif self.choice == "5":
                 player.display_moves() #@Manuel
+            print()
         else:
             print("invalid choice \n")
 
@@ -57,6 +57,7 @@ class Game:
             self.final_battle()
 
     def final_battle(self):
+        print("you fought and won")
         sys.exit(0)
 
     def game_over(self, player):

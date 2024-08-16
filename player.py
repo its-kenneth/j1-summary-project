@@ -10,7 +10,7 @@ def create_move(moves, name):
 class Player(Character):
     def __init__(self):
         super().__init__()
-        self.moves = [create_move(moves, "kick")]
+        self.moves = [create_move(moves, "Kick")]
     
     def set_name(self):
         self.name = input("Enter the name of user: ")
@@ -18,6 +18,13 @@ class Player(Character):
     def display_stats(self):
         print(f"HP: {self.hp}")
         print(f"Attack: {self.attack}")
+
+    def display_moves(self):
+        for move in self.moves:
+            print(f"""Name: {move.get_name()}
+Multiplier: {move.get_multiplier()}
+PP: {move.get_current_power()}/{move.get_power_limit()}
+""")
 
     def recharge_hp(self,percentage):
         self.change_hp(self.hp * percentage)
@@ -33,14 +40,10 @@ class Player(Character):
     
             choice = int(input("Enter option: "))
             if choice > 0 and choice <= len(self.moves):
-                break
+                if not self.moves[choice].can_use():
+                    print("Move has no more PP!")
             else:
                 print("Invalid option")
 
         creature.change_hp(-(self.get_attack()*self.moves[choice].get_multiplier()))
         self.moves[choice].used_moves()
-        
-                
-            
-        
-        
