@@ -15,7 +15,7 @@ class Game:
         player.set_name()
         self.creatures = []
         self.create_creature()
-        # create vreature
+        # create creature
         
     
     def display_options(self): # change later
