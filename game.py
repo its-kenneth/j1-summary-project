@@ -3,7 +3,6 @@ import text
 
 class Game:
     def __init__(self):
-        
         self.turns_to_monster = 10
 
     def start(self, player):
@@ -22,7 +21,7 @@ class Game:
         self.choice = opt
     
     def do(self, player): # changer later also
-        if self.choice in "1234":
+        if self.choice in "123456":
             print(text.choice_stack[int(self.choice)-1])
             print()
             if self.choice == "1":
@@ -42,8 +41,7 @@ class Game:
             elif self.choice == "5":
                 player.display_moves() #@Manuel
         else:
-            print("invalid choice")
-            self.display_options()
+            print("invalid choice \n")
 
         if self.turns_to_monster == 0:
             self.final_battle()
