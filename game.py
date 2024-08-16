@@ -1,5 +1,6 @@
 import sys
 import text
+from creature import Creature
 
 class Game:
     def __init__(self):
@@ -7,12 +8,12 @@ class Game:
 
     def create_creature(self):
         for creature in text.creatures:
-            self.creatures.append(Creature(name = creature["Name"], hp = creature["hp"], attack = creature["attack"], move_dropped = creature["move_dropped"]))
+            self.creatures.append(Creature(creature["name"], creature["hp"], creature["attack"], creature["move_dropped"]))
         
 
     def start(self, player):
         player.set_name()
-        self.creatures = []t
+        self.creatures = []
         self.create_creature()
         # create vreature
         
@@ -56,7 +57,6 @@ class Game:
             self.final_battle()
 
     def final_battle(self):
-        while 
         sys.exit(0)
 
     def game_over(self, player):
