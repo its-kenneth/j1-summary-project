@@ -1,10 +1,8 @@
-options = "What would you like to do? \n 1. Exercise \n 2. Eat \n 3. Sleep"
+# display options text
+option_stack = ["Exercise", "Eat", "Sleep", "Display Stats"]
 
-# choices
-choice_exercise = "you exercised"
-choice_eat = "you eat"
-choice_sleep = "you slept"
-choice_invalid = "invalid choice"
+# choices text
+choice_stack = ["You exercise", "You eat", "You sleep", "Stats:\n"]
 
 # final msgs
 final_win = "You won!"
