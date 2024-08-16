@@ -1,13 +1,30 @@
 import sys
 import text
+from creature import Creature
 
 class Game:
     def __init__(self):
         self.turns_to_monster = 10
 
+    def create_creature(self):
+        for creature in text.creatures:
+            self.creatures.append(Creature(creature["name"], creature["hp"], creature["attack"], creature["move_dropped"]))
+
     def start(self, player):
         player.set_name()
-    
+        self.creatures = []
+        self.create_creature()
+
+    def gym(self, player):
+        for i in range(len(self.creatures)):
+            print(f"{i + 1}:{self.creatures[i].get_name()}")
+        battle_choice = input("Which Pokemon would you like to battle?\n")
+        if battle_choice in "123":
+            self.creatures[int(battle_choice) - 1].battle(player)
+        else:
+            print("Invalid choice")
+            self.gym(player)
+            
     def display_options(self): # change later
         print(f"Turns to monster: {self.turns_to_monster}")
         for i in range(len(text.option_stack)):
