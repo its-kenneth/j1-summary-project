@@ -1,12 +1,9 @@
 from moves import Move
+# option text
+option_stack = ["Exercise", "Eat", "Sleep", "Display Stats", "Display Moves", "Go to Pokemon Gym"]
 
-options = "What would you like to do? \n 1. Exercise \n 2. Eat \n 3. Sleep"
-
-# choices
-choice_exercise = "you exercised"
-choice_eat = "you eat"
-choice_sleep = "you slept"
-choice_invalid = "invalid choice"
+# choice text
+choice_stack = ["You exercise", "You eat", "You sleep", "Stats:\n", "Moves:\n", "You enter the Pokemon Gym..."]
 
 # final msgs
 final_win = "You won!"
