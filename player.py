@@ -40,10 +40,10 @@ PP: {move.get_current_power()}/{move.get_power_limit()}
     
             choice = int(input("Enter option: "))
             if choice > 0 and choice <= len(self.moves):
-                if not self.moves[choice].can_use():
+                if not self.moves[choice - 1].can_use():
                     print("Move has no more PP!")
             else:
                 print("Invalid option")
 
-        creature.change_hp(-(self.get_attack()*self.moves[choice].get_multiplier()))
-        self.moves[choice].used_moves()
+        creature.change_hp(-(self.get_attack()*self.moves[choice - 1].get_multiplier()))
+        self.moves[choice - 1].used_moves()

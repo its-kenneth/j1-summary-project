@@ -1,5 +1,5 @@
 class Character:
-    def __init__(self, name = "", hp = 100, attack = 0):
+    def __init__(self, name = "", hp = 100, attack = 10):
         self.name = name
         self.hp = hp
         self.maxhp = self.hp

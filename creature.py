@@ -12,7 +12,8 @@ class Creature(Character):
     
     def battle(self, player):
         while self.hp >= 0:
-            player.use_move()
+            player.use_move(self)
+            print(f"{self.get_name()} used {self.get_move_dropped()}! It dealt {self.get_attack()} damage!")
             player.change_hp(-self.get_attack())
 
         print(f"You won! {self.get_name()} dropped {self.get_move_dropped()}")
