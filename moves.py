@@ -1,10 +1,10 @@
-class Moves:
+class Move:
     def __init__(self, name: str, multiplier: float, power_limit: int):
         self.name = name
         self.multiplier = multiplier
         self.power_limit = power_limit
         self.current_power = power_limit
-
+        
     def get_name(self):
         return self.name
 
@@ -31,4 +31,4 @@ class Moves:
         if self.current_power == 0:
             return False
         else:
-            return True
+            return True 
