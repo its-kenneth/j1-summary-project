@@ -5,8 +5,17 @@ class Game:
     def __init__(self):
         self.turns_to_monster = 10
 
+    def create_creature(self):
+        for creature in text.creatures:
+            self.creatures.append(Creature(name = creature["Name"], hp = creature["hp"], attack = creature["attack"], move_dropped = creature["move_dropped"]))
+        
+
     def start(self, player):
         player.set_name()
+        self.creatures = []t
+        self.create_creature()
+        # create vreature
+        
     
     def display_options(self): # change later
         print(f"Turns to monster: {self.turns_to_monster}")
