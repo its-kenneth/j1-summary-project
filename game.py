@@ -56,7 +56,7 @@ class Game:
             self.final_battle()
 
     def final_battle(self):
-        print("you fought and won")
+        while 
         sys.exit(0)
 
     def game_over(self, player):
