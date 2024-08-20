@@ -16,7 +16,7 @@ class Player(Character):
         self.name = input("Enter the name of user: ")
         
     def display_stats(self):
-        print(f"HP: {self.hp}")
+        print(f"HP: {self.hp}/{self.maxhp}")
         print(f"Attack: {self.attack}")
 
     def display_moves(self):
@@ -26,8 +26,11 @@ Multiplier: {move.get_multiplier()}
 PP: {move.get_current_power()}/{move.get_power_limit()}
 """)
 
-    def recharge_hp(self,percentage):
-        self.change_hp(self.hp * percentage)
+    def sleep(self):
+        self.change_hp(self.get_maxhp())
+        for i in range(len(self.moves)):
+            self.moves[i].set_current_power(self.moves[i].get_power_limit())
+            
 
     def use_move(self, creature):
         choice = 0
@@ -37,13 +40,20 @@ PP: {move.get_current_power()}/{move.get_power_limit()}
             for i in range(len(self.moves)):
                 print(f"{i+1}: ", end="")
                 print(self.moves[i].get_name())
+            print(f"{len(self.moves) + 1}: Run")
     
             choice = int(input("Enter option: "))
             if choice > 0 and choice <= len(self.moves):
-                if not self.moves[choice].can_use():
+                if not self.moves[choice - 1].can_use():
                     print("Move has no more PP!")
+                    choice = 0
+            elif choice == len(self.moves) + 1:
+                print("You flee from the battle...")
+                return "flee", "flee"
             else:
                 print("Invalid option")
 
-        creature.change_hp(-(self.get_attack()*self.moves[choice].get_multiplier()))
-        self.moves[choice].used_moves()
+        damage = -(self.get_attack()*self.moves[choice - 1].get_multiplier())
+        creature.change_hp(damage)
+        self.moves[choice - 1].used_moves()
+        return self.moves[choice - 1], damage
