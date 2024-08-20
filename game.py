@@ -18,6 +18,7 @@ class Game:
         player.set_name()
         self.creatures = []
         self.create_creature()
+        
     def gym(self, player):
         for i in range(len(self.creatures)):
             print(f"{i + 1}: {self.creatures[i].get_name()}")
@@ -50,12 +51,15 @@ class Game:
             print(text.choice_stack[int(self.choice)-1])
             if self.choice == "1":
                 self.exercise(player)
+                player.display_stats() 
                 self.turns_to_monster -= 1
             elif self.choice == "2":
                 self.eat(player)
+                player.display_stats() 
                 self.turns_to_monster -= 1
             elif self.choice == "3":
                 self.sleep(player)
+                player.display_stats() 
                 self.turns_to_monster -= 1
             elif self.choice == "6":
                 self.gym(player)
