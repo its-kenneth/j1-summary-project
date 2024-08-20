@@ -11,6 +11,9 @@ class Character:
     def get_hp(self):
         return self.hp
 
+    def get_maxhp(self):
+        return self.maxhp
+
     def get_attack(self):
         return self.attack
 

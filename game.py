@@ -1,10 +1,14 @@
 import sys
 import text
 from creature import Creature
+from monster import Monster
+
+def create_monster():
+    return Monster(text.monster["name"], text.monster["hp"], text.monster["attack"])
 
 class Game:
     def __init__(self):
-        self.turns_to_monster = 10
+        self.turns_to_monster = 30
 
     def create_creature(self):
         for creature in text.creatures:
@@ -17,10 +21,15 @@ class Game:
 
     def gym(self, player):
         for i in range(len(self.creatures)):
-            print(f"{i + 1}:{self.creatures[i].get_name()}")
-        battle_choice = input("Which Pokemon would you like to battle?\n")
+            print(f"{i + 1}: {self.creatures[i].get_name()}")
+        print("4. Go back")
+        battle_choice = input("Which Pokemon would you like to battle: ")
         if battle_choice in "123":
+            self.turns_to_monster -= 1
             self.creatures[int(battle_choice) - 1].battle(player)
+        elif battle_choice == '4':
+            print("You left the gym...")
+            return
         else:
             print("Invalid choice")
             self.gym(player)
@@ -37,7 +46,7 @@ class Game:
     def select_option(self,opt):
         self.choice = opt
     
-    def do(self, player): # changer later also
+    def do(self, player):
         if self.choice in "123456":
             print(text.choice_stack[int(self.choice)-1])
             if self.choice == "1":
@@ -50,22 +59,21 @@ class Game:
                 self.sleep(player)
                 self.turns_to_monster -= 1
             elif self.choice == "6":
-                self.gym(player) #@Manuel
-                self.turns_to_monster -= 1
+                self.gym(player)
             elif self.choice == "4":
                 player.display_stats() 
             elif self.choice == "5":
-                player.display_moves() #@Manuel
+                player.display_moves()
             print()
         else:
             print("invalid choice \n")
 
         if self.turns_to_monster == 0:
-            self.final_battle()
+            self.final_battle(player)
 
-    def final_battle(self):
-        print("you fought and won")
-        sys.exit(0)
+    def final_battle(self, player):
+        monster = create_monster()
+        monster.battle(player)
 
     def game_over(self, player):
         return player.get_hp() <= 0
@@ -74,7 +82,7 @@ class Game:
         player.change_attack(10)
 
     def sleep(self, player):
-        player.recharge_hp(0.5)
+        player.sleep()
 
     def eat(self, player):
         player.increase_hp(10)

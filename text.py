@@ -3,7 +3,7 @@ from moves import Move
 option_stack = ["Exercise", "Eat", "Sleep", "Display Stats", "Display Moves", "Go to Pokemon Gym"]
 
 # choice text
-choice_stack = ["You exercise", "You eat", "You sleep", "Stats:\n", "Moves:\n", "You enter the Pokemon Gym..."]
+choice_stack = ["You exercise", "You eat", "You slept! Your hp and move pp have been restored to full!", "Stats:\n", "Moves:\n", "You enter the Pokemon Gym..."]
 
 # final msgs
 final_win = "You won!"
@@ -21,3 +21,5 @@ creatures = [
     {"name": "Silver Knight", "hp": 450, "attack": 25, "move_dropped": "Slash"},
     {"name": "Captain Gun", "hp": 800, "attack": 45, "move_dropped": "Shot"}
 ]
+
+monster = {"name": "Monster", "hp": 1000, "attack": 50}
