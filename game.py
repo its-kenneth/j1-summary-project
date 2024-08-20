@@ -88,4 +88,4 @@ class Game:
         player.sleep()
 
     def eat(self, player):
-        player.increase_hp(10)
+        player.increase_hp(15)
