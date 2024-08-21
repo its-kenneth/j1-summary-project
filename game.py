@@ -15,13 +15,14 @@ class Game:
             self.creatures.append(Creature(creature["name"], creature["hp"], creature["attack"], creature["move_dropped"]))
 
     def start(self, player):
+        text.intro()
         player.set_name()
         self.creatures = []
         self.create_creature()
-        
+
     def gym(self, player):
         for i in range(len(self.creatures)):
-            print(f"{i + 1}: {self.creatures[i].get_name()}")
+            print(f"{i + 1}: {self.creatures[i].get_name()} ({self.creatures[i].get_hp()}HP, {self.creatures[i].get_attack()} attack)")
         print(f"{len(self.creatures) + 1}. Go back")
         battle_choice = input("Which Pokemon would you like to battle: ")
 
@@ -39,19 +40,19 @@ class Game:
         else:
             print("Invalid choice")
             self.gym(player)
-            
+
     def display_options(self): # change later
         print(f"Turns to monster: {self.turns_to_monster}")
         for i in range(len(text.option_stack)):
             print(f"{i+1}. {text.option_stack[i]}")
-        
+
     def option_input(self):
         option = input("Enter an option: ")
         self.select_option(option)
-        
+
     def select_option(self,opt):
         self.choice = opt
-    
+
     def do(self, player):
         if self.choice in ['1','2','3','4','5','6']:
             print(text.choice_stack[int(self.choice)-1])
