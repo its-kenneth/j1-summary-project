@@ -26,7 +26,7 @@ creatures = [
     {"name": "Manuel", "hp": 600, "attack": 60, "move_dropped": "Harass"},
 ]
 
-monster = {"name": "Monster", "hp": 1000, "attack": 65}
+monster = {"name": "Monster", "hp": 2000, "attack": 65}
 
 def intro():
     print("""hi welcome to mango tree
