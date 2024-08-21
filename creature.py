@@ -22,7 +22,7 @@ class Creature(Character):
             
             if used_move == "flee":
                 self.change_hp(self.maxhp)
-                return
+                return False
                 
             print(f"{player.get_name()} used {used_move.get_name()}! It dealt {-int(damage)} damage!")
             
@@ -33,7 +33,8 @@ class Creature(Character):
                 
                 player.change_hp(-self.get_attack())
                 if player.hp <= 0:
-                    return
+                    return False
 
         print(f"You won! {self.get_name()} dropped {self.get_move_dropped()}")
         player.moves.append(create_move(moves, self.get_move_dropped()))
+        return True

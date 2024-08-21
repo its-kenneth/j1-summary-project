@@ -24,12 +24,18 @@ class Game:
     def gym(self, player):
         for i in range(len(self.creatures)):
             print(f"{i + 1}: {self.creatures[i].get_name()}")
-        print("4. Go back")
+        print(f"{len(self.creatures) + 1}. Go back")
         battle_choice = input("Which Pokemon would you like to battle: ")
-        if battle_choice in ['1','2','3']:
+
+        valid_input = []
+        for i in range(1, len(self.creatures) + 1):
+            valid_input.append(str(i))
+        if battle_choice in valid_input:
             self.turns_to_monster -= 1
-            self.creatures[int(battle_choice) - 1].battle(player)
-        elif battle_choice == '4':
+            won = self.creatures[int(battle_choice) - 1].battle(player)
+            if won:
+                self.creatures.pop(int(battle_choice) - 1)
+        elif battle_choice == str(len(self.creatures) + 1):
             print("You left the gym...")
             return
         else:
