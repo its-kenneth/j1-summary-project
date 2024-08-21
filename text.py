@@ -25,10 +25,10 @@ creatures = [
 monster = {"name": "Monster", "hp": 1000, "attack": 65}
 
 def intro():
-    print(""" hi welcome to mango tree
+    print("""hi welcome to mango tree
     """)
 
-    faq_choice = input("backstory (y/n: ")
+    faq_choice = input("backstory (y/n): ")
 
     if faq_choice.lower() == 'y':
         print("""
