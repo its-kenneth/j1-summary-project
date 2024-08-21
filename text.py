@@ -22,4 +22,4 @@ creatures = [
     {"name": "Captain Gun", "hp": 800, "attack": 45, "move_dropped": "Shot"}
 ]
 
-monster = {"name": "Monster", "hp": 1000, "attack": 50}
+monster = {"name": "Monster", "hp": 1000, "attack": 65}
