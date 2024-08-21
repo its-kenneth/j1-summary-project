@@ -24,7 +24,7 @@ class Game:
             print(f"{i + 1}: {self.creatures[i].get_name()}")
         print("4. Go back")
         battle_choice = input("Which Pokemon would you like to battle: ")
-        if battle_choice in range(1,4):
+        if battle_choice in ['1','2','3']:
             self.turns_to_monster -= 1
             self.creatures[int(battle_choice) - 1].battle(player)
         elif battle_choice == '4':
@@ -47,7 +47,7 @@ class Game:
         self.choice = opt
     
     def do(self, player):
-        if self.choice in range(1,7):
+        if self.choice in ['1','2','3','4','5','6']:
             print(text.choice_stack[int(self.choice)-1])
             if self.choice == "1":
                 self.exercise(player)
