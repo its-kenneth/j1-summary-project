@@ -16,6 +16,8 @@ class Game:
 
     def start(self, player):
         player.set_name()
+        if player.name == "Manuel":
+            player.increase_hp(100) 
         self.creatures = []
         self.create_creature()
         

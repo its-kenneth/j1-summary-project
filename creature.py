@@ -37,6 +37,3 @@ class Creature(Character):
 
         print(f"You won! {self.get_name()} dropped {self.get_move_dropped()}")
         player.moves.append(create_move(moves, self.get_move_dropped()))
-
-        
-        
