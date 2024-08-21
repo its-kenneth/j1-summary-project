@@ -23,3 +23,25 @@ creatures = [
 ]
 
 monster = {"name": "Monster", "hp": 1000, "attack": 65}
+
+def intro():
+    print(""" hi welcome to mango tree
+    """)
+
+    faq_choice = input("backstory (y/n: ")
+
+    if faq_choice.lower() == 'y':
+        print("""
+ok basically you got 30 turns before monster arrives to kill you
+
+go do whatever you want to prepare
+
+exercise increases attack
+eat increases HP
+sleep restores HP to full and Moves PP to full
+
+fight monsters in gym to collect limited edition moves to have stronger attacks
+        """)
+    else:
+        print("ok bye bye go start the game")
+    

@@ -15,10 +15,10 @@ class Game:
             self.creatures.append(Creature(creature["name"], creature["hp"], creature["attack"], creature["move_dropped"]))
 
     def start(self, player):
+        text.intro()
         player.set_name()
         self.creatures = []
         self.create_creature()
-        
     def gym(self, player):
         for i in range(len(self.creatures)):
             print(f"{i + 1}: {self.creatures[i].get_name()}")
