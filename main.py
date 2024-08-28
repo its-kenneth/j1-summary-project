@@ -8,12 +8,12 @@ if __name__ == "__main__":
         player = Player()
         game = Game()
         game.start(player)
-    
+
         while not game.game_over(player):
             game.display_options()
             game.option_input()
             game.do(player)
-    
+
         choice = input("You died! Play again? (y/n): ")
 
     print("Thank you for playing!")
