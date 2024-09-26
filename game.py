@@ -30,25 +30,19 @@ class Game:
             f"{creature.get_name()} ({creatures.get_hp()}HP, {creature.get_attack()} attack)"
             for creature in self.creatures
         ]
-        choice = text.prompt_player_choice(
+        choice = text.prompt_valid_choice(
             preamble="",
             options=monsteroptions + ["Go back"],
             prompt="Which Pokemon would you like to battle: "
         )
-        valid_input = []
-        for i in range(1, len(self.creatures) + 1):
-            valid_input.append(i)
-        if choice in valid_input:
+        if choice < len(monsteroptions):
             self.turns_to_monster -= 1
             won = self.creatures[int(battle_choice) - 1].battle(player)
             if won:
                 self.creatures.pop(int(battle_choice) - 1)
-        elif battle_choice == str(len(self.creatures) + 1):
+        elif choice == len(monsteroptions):
             print("You left the gym...")
             return
-        else:
-            print("Invalid choice")
-            self.gym(player)
 
     def options(self):
         return text.option_stack.copy()
