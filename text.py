@@ -97,3 +97,7 @@ fight monsters in gym to collect limited edition moves to have stronger attacks
         """)
     else:
         print("ok bye bye go start the game")
+
+def display_options(options: list[str]):
+    for i in range(len(options)):
+        print(f"{i+1}. {options[i]}")

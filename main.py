@@ -1,5 +1,6 @@
 from game import Game
 from player import Player
+import text
 
 if __name__ == "__main__":
     choice = 'y'
@@ -10,7 +11,9 @@ if __name__ == "__main__":
         game.start(player)
 
         while not game.game_over(player):
-            game.display_options()
+            options = game.options()
+            print(f"Turns to monster: {game.turns_to_monster}")
+            text.display_options(options)
             choice = game.option_input()
             game.do(player, choice)
 

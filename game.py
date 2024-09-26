@@ -48,10 +48,8 @@ class Game:
             print("Invalid choice")
             self.gym(player)
 
-    def display_options(self):  # change later
-        print(f"Turns to monster: {self.turns_to_monster}")
-        for i in range(len(text.option_stack)):
-            print(f"{i+1}. {text.option_stack[i]}")
+    def options(self):
+        return text.option_stack.copy()
 
     def option_input(self):
         choice = input("Enter an option: ")
