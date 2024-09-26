@@ -1,4 +1,4 @@
-from text import moves
+import text
 from moves import Move
 from character import Character
 
@@ -13,7 +13,7 @@ class Player(Character):
 
     def __init__(self):
         super().__init__()
-        self.moves = [create_move(moves, "Kick")]
+        self.moves = [create_move(text.moves, "Kick")]
 
     def set_name(self):
         self.name = input("Enter the name of user: ")
@@ -38,13 +38,13 @@ PP: {move.get_current_power()}/{move.get_power_limit()}
         choice = 0
 
         while choice <= 0 or choice > len(self.moves):
-            print("What move would you like to use?")
-            for i in range(len(self.moves)):
-                print(f"{i+1}: ", end="")
-                print(self.moves[i].get_name())
-            print(f"{len(self.moves) + 1}: Run")
-
-            choice = int(input("Enter option: "))
+            movenames = [move.get_name() for move in self.moves]
+            choice = text.prompt_player_choice(
+                preamble="What move would you like to use?",
+                options=movenames + ["Run"],
+                prompt="Enter option: "
+            )
+            choice = int(choice)
             if choice > 0 and choice <= len(self.moves):
                 if not self.moves[choice - 1].can_use():
                     print("Move has no more PP!")

@@ -16,7 +16,7 @@ if __name__ == "__main__":
                 preamble=f"Turns to monster: {game.turns_to_monster}",
                 prompt="Enter an option: "
             )
-            game.do(player, choice)
+            game.do(player, game.options()[choice])
 
         choice = input("You died! Play again? (y/n): ")
 

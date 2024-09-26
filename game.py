@@ -26,17 +26,19 @@ class Game:
         self.create_creature()
 
     def gym(self, player):
-        for i in range(len(self.creatures)):
-            print(
-                f"{i + 1}: {self.creatures[i].get_name()} ({self.creatures[i].get_hp()}HP, {self.creatures[i].get_attack()} attack)"
-            )
-        print(f"{len(self.creatures) + 1}. Go back")
-        battle_choice = input("Which Pokemon would you like to battle: ")
-
+        monsteroptions = [
+            f"{creature.get_name()} ({creatures.get_hp()}HP, {creature.get_attack()} attack)"
+            for creature in self.creatures
+        ]
+        choice = text.prompt_player_choice(
+            preamble="",
+            options=monsteroptions + ["Go back"],
+            prompt="Which Pokemon would you like to battle: "
+        )
         valid_input = []
         for i in range(1, len(self.creatures) + 1):
-            valid_input.append(str(i))
-        if battle_choice in valid_input:
+            valid_input.append(i)
+        if choice in valid_input:
             self.turns_to_monster -= 1
             won = self.creatures[int(battle_choice) - 1].battle(player)
             if won:

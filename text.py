@@ -107,4 +107,4 @@ def prompt_player_choice(
     for i in range(len(options)):
         print(f"{i+1}. {options[i]}")
     choice = input(prompt)
-    return choice
+    return int(choice)
