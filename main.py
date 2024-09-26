@@ -11,10 +11,11 @@ if __name__ == "__main__":
         game.start(player)
 
         while not game.game_over(player):
-            options = game.options()
-            print(f"Turns to monster: {game.turns_to_monster}")
-            text.display_options(options)
-            choice = game.option_input()
+            choice = text.prompt_player_choice(
+                options=game.options(),
+                preamble=f"Turns to monster: {game.turns_to_monster}",
+                prompt="Enter an option: "
+            )
             game.do(player, choice)
 
         choice = input("You died! Play again? (y/n): ")

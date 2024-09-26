@@ -98,6 +98,13 @@ fight monsters in gym to collect limited edition moves to have stronger attacks
     else:
         print("ok bye bye go start the game")
 
-def display_options(options: list[str]):
+def prompt_player_choice(
+        options: list[str],
+        preamble: str,
+        prompt: str
+):
+    print(preamble)
     for i in range(len(options)):
         print(f"{i+1}. {options[i]}")
+    choice = input(prompt)
+    return choice

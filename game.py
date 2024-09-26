@@ -51,9 +51,9 @@ class Game:
     def options(self):
         return text.option_stack.copy()
 
-    def option_input(self):
-        choice = input("Enter an option: ")
-        return choice
+    # def option_input(self):
+    #     choice = input("Enter an option: ")
+    #     return choice
 
     # def select_option(self, opt):
     #     self.choice = opt
