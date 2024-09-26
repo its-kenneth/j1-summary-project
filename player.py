@@ -44,7 +44,6 @@ PP: {move.get_current_power()}/{move.get_power_limit()}
                 options=movenames + ["Run"],
                 prompt="Enter option: "
             )
-            choice = int(choice)
             if choice > 0 and choice <= len(self.moves):
                 if not self.moves[choice - 1].can_use():
                     print("Move has no more PP!")
