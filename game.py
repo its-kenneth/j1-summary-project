@@ -54,32 +54,32 @@ class Game:
             print(f"{i+1}. {text.option_stack[i]}")
 
     def option_input(self):
-        option = input("Enter an option: ")
-        self.select_option(option)
+        choice = input("Enter an option: ")
+        return choice
 
-    def select_option(self, opt):
-        self.choice = opt
+    # def select_option(self, opt):
+    #     self.choice = opt
 
-    def do(self, player):
-        if self.choice in ['1', '2', '3', '4', '5', '6']:
-            print(text.choice_stack[int(self.choice) - 1])
-            if self.choice == "1":
+    def do(self, player, choice):
+        if choice in ['1', '2', '3', '4', '5', '6']:
+            print(text.choice_stack[int(choice) - 1])
+            if choice == "1":
                 self.exercise(player)
                 player.display_stats()
                 self.turns_to_monster -= 1
-            elif self.choice == "2":
+            elif choice == "2":
                 self.eat(player)
                 player.display_stats()
                 self.turns_to_monster -= 1
-            elif self.choice == "3":
+            elif choice == "3":
                 self.sleep(player)
                 player.display_stats()
                 self.turns_to_monster -= 1
-            elif self.choice == "6":
+            elif choice == "6":
                 self.gym(player)
-            elif self.choice == "4":
+            elif choice == "4":
                 player.display_stats()
-            elif self.choice == "5":
+            elif choice == "5":
                 player.display_moves()
             print()
         else:
