@@ -108,6 +108,6 @@ def prompt_valid_choice(
         print(f"{i+1}. {options[i]}")
     choice = input(prompt)
     while not choice.isdecimal() and (int(choice) - 1) not in range(0, len(options)):
-        print("Invalid choice, pick a number from 1 to", len(options)")
+        print("Invalid choice, pick a number from 1 to", len(options))
         choice = input(prompt)
     return int(choice) - 1
