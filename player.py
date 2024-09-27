@@ -36,19 +36,19 @@ PP: {move.get_current_power()}/{move.get_power_limit()}
     #     for i in range(len(self.moves)):
     #         self.moves[i].set_current_power(self.moves[i].get_power_limit())
 
-    def use_move(self, creature):
-        choice = 0
+    # def use_move(self, creature):
+    #     choice = 0
 
-        movenames = [move.get_name() for move in self.moves if move.can_use()]
-        choice = text.prompt_valid_choice(
-            preamble="What move would you like to use?",
-            options=movenames + ["Run"],
-            prompt="Enter option: ")
-        if choice == len(self.moves):
-            print("You flee from the battle...")
-            return "flee", "flee"
+    #     movenames = [move.get_name() for move in self.moves if move.can_use()]
+    #     choice = text.prompt_valid_choice(
+    #         preamble="What move would you like to use?",
+    #         options=movenames + ["Run"],
+    #         prompt="Enter option: ")
+    #     if choice == len(self.moves):
+    #         print("You flee from the battle...")
+    #         return "flee", "flee"
 
-        damage = -(self.get_attack() * self.moves[choice].get_multiplier())
-        creature.change_hp(damage)
-        self.moves[choice].used_moves()
-        return self.moves[choice], damage
+    #     damage = -(self.get_attack() * self.moves[choice].get_multiplier())
+    #     creature.change_hp(damage)
+    #     self.moves[choice].used_moves()
+    #     return self.moves[choice], damage

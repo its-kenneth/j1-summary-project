@@ -33,6 +33,22 @@ class Game:
         for i in range(len(player.moves)):
             player.moves[i].set_current_power(player.moves[i].get_power_limit())
 
+    def use_move(self, player: Player, creature: Creature):
+        choice = 0
+        movenames = [move.get_name() for move in player.moves if move.can_use()]
+        choice = text.prompt_valid_choice(
+            preamble="What move would you like to use?",
+            options=movenames + ["Run"],
+            prompt="Enter option: ")
+        if choice == len(player.moves):
+            print("You flee from the battle...")
+            return "flee", "flee"
+
+        damage = -(player.get_attack() * player.moves[choice].get_multiplier())
+        creature.change_hp(damage)
+        player.moves[choice].used_moves()
+        return player.moves[choice], damage
+
     def battle(self, player: Player, creature: Creature):
         print("You have entered a battle!\n")
 
@@ -41,10 +57,10 @@ class Game:
                 f"{creature.get_name()} has {int(creature.get_hp())}HP left and {creature.get_attack()} attack"
             )
             print(f"You have {player.get_hp()}HP left.\n")
-            used_move, damage = player.use_move(self)
+            used_move, damage = self.use_move(player, creature)
             print()
             if used_move == "flee":
-                creature.change_hp(self.maxhp)
+                creature.change_hp(player.maxhp)
                 return False
             print(
                 f"{player.get_name()} used {used_move.get_name()}! It dealt {-int(damage)} damage!"
@@ -71,7 +87,7 @@ class Game:
             )
             print(f"You have {player.get_hp()}HP left.\n")
 
-            used_move, damage = player.use_move(monster)
+            used_move, damage = self.use_move(player, monster)
             print()
 
             if used_move == "flee":
