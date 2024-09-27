@@ -146,3 +146,33 @@ def prompt_valid_choice(options: list[str], preamble: str, prompt: str):
         print("Invalid choice, pick a number from 1 to", len(options))
         choice = input(prompt)
     return int(choice) - 1
+
+def attack_report(name: str, move: str, damage: int) -> str:
+    return f"{name} used {move}! It dealt {damage} damage!"
+
+def monster_attack_report(name: str, damage: int) -> str:
+    return f"{name} lashed out! It dealt {damage} damage!"
+
+def creature_report(name: str, hp: int, attack: int) -> str:
+    return f"{name} has {hp} HP left and {attack} attack."
+
+def player_report(name: str, hp: int) -> str:
+    return f"{name} {"have" if name == "You" else "has"} {hp} HP left."
+
+def flee_report(name: str, fatal: bool = False) -> str:
+    if fatal:
+        return f"Coward! The monster struck a fatal blow as {name.lower()} fled, causing {name.lower()} to bleed to death."
+    else:
+        return f"{name} {"flee" if name == "You" else "flees"} from the battle..."
+
+def battle_report(victor: str, loser: str, loot: str) -> str:
+    return f"{victor} won! {loser} dropped {loot}."
+
+def win_report(name: str) -> str:
+    return f"{name} won! Thank you for playing!"
+
+def final_battle_report(name: str) -> str:
+    return f"{name} {"have" if name == "You" else "has"} entered the final battle!"
+
+def leave_gym_report(name: str) -> str:
+    return f"{name} left the gym..."

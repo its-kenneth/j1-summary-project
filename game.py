@@ -1,3 +1,4 @@
+import sys
 import text
 from creature import Creature
 from monster import Monster
@@ -41,7 +42,7 @@ class Game:
             options=movenames + ["Run"],
             prompt="Enter option: ")
         if choice == len(player.moves):
-            print("You flee from the battle...")
+            print(text.flee_report("You"))
             return "flee", "flee"
 
         damage = -(player.get_attack() * player.moves[choice].get_multiplier())
@@ -53,62 +54,74 @@ class Game:
         print("You have entered a battle!\n")
 
         while creature.hp > 0:
-            print(
-                f"{creature.get_name()} has {int(creature.get_hp())}HP left and {creature.get_attack()} attack"
-            )
-            print(f"You have {player.get_hp()}HP left.\n")
+            print(text.creature_report(
+                name=creature.get_name(),
+                hp=creature.get_hp(),
+                attack=creature.get_attack()
+            ))
+            print(text.player_report(
+                name="You",
+                hp=player.get_hp(),
+            ))
             used_move, damage = self.use_move(player, creature)
-            print()
             if used_move == "flee":
-                creature.change_hp(player.maxhp)
+                creature.change_hp(creature.maxhp)
                 return False
-            print(
-                f"{player.get_name()} used {used_move.get_name()}! It dealt {-int(damage)} damage!"
-            )
+            print(text.attack_report(
+                name=player.get_name(),
+                move=used_move.get_name(),
+                damage=-int(damage),
+            ))
             if creature.hp <= 0:
                 break
             else:
-                print(
-                    f"{creature.get_name()} used {creature.get_move_dropped()}! It dealt {creature.get_attack()} damage!\n"
-                )
+                print(text.attack_report(
+                    name=creature.get_name(),
+                    move=creature.get_move_dropped(),
+                    damage=creature.get_attack()
+                ))
                 player.change_hp(-creature.get_attack())
                 if player.hp <= 0:
                     return False
-        print(f"You won! {creature.get_name()} dropped {creature.get_move_dropped()}")
+        print(text.battle_report(
+            victor="You",
+            loser=creature.get_name(),
+            loot=creature.get_move_dropped()
+        ))
         player.moves.append(create_move(text.moves, creature.get_move_dropped()))
         return True
 
     def monster_battle(self, player: Player, monster: Monster):
-        print("You have entered the final battle!\n")
+        print(text.final_battle_report("You"))
 
         while monster.hp > 0:
-            print(
-                f"{monster.get_name()} has {int(monster.get_hp())}HP left and {monster.get_attack()} attack"
-            )
-            print(f"You have {player.get_hp()}HP left.\n")
-
+            print(text.creature_report(
+                name=monster.get_name(),
+                hp=monster.get_hp(),
+                attack=monster.get_attack()
+            ))
+            print(text.player_report(
+                name="You",
+                hp=player.get_hp(),
+            ))
             used_move, damage = self.use_move(player, monster)
-            print()
-
             if used_move == "flee":
-                print(
-                    "You coward! The monster struck a fatal blow as you were fleeing, causing you to bleed to death."
-                )
+                print(text.flee_report("You", fatal=True))
                 player.hp = 0
                 return
-
-            print(
-                f"{player.get_name()} used {used_move.get_name()}! It dealt {-int(damage)} damage!"
-            )
-
+            print(text.attack_report(
+                name=player.get_name(),
+                move=used_move.get_name(),
+                damage=-int(damage)
+            ))
             if monster.hp <= 0:
-                print("You won! Thank you for playing!")
+                print(text.win_report("You"))
                 sys.exit(0)
             else:
-                print(
-                    f"{monster.get_name()} lashed out! It dealt {monster.get_attack()} damage!\n"
-                )
-
+                print(text.monster_attack_report(
+                    name=monster.get_name(),
+                    damage=monster.get_attack()
+                ))
                 player.change_hp(-monster.get_attack())
                 if player.hp <= 0:
                         return
@@ -128,7 +141,7 @@ class Game:
             if won:
                 self.creatures.pop(choice)
         elif choice == len(monsteroptions):
-            print("You left the gym...")
+            print(text.leave_gym_report("You"))
             return
 
     def options(self):
