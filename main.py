@@ -11,7 +11,7 @@ if __name__ == "__main__":
         game.start(player)
 
         while not game.game_over(player):
-            choice = text.prompt_player_choice(
+            choice = text.prompt_valid_choice(
                 options=game.options(),
                 preamble=f"Turns to monster: {game.turns_to_monster}",
                 prompt="Enter an option: ")
