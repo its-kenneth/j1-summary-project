@@ -29,6 +29,7 @@ class Player(Character):
 Multiplier: {move.get_multiplier()}
 PP: {move.get_current_power()}/{move.get_power_limit()}
 """)
+        print()
 
     def sleep(self):
         self.change_hp(self.get_maxhp())

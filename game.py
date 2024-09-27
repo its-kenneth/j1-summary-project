@@ -44,7 +44,7 @@ class Game:
             return
 
     def options(self):
-        return text.option_stack.copy()
+        return list(text.choices.keys())
 
     # def option_input(self):
     #     choice = input("Enter an option: ")
@@ -53,30 +53,27 @@ class Game:
     # def select_option(self, opt):
     #     self.choice = opt
 
-    def do(self, player, choice):
-        if choice in ['1', '2', '3', '4', '5', '6']:
-            print(text.choice_stack[int(choice) - 1])
-            if choice == "1":
-                self.exercise(player)
-                player.display_stats()
-                self.turns_to_monster -= 1
-            elif choice == "2":
-                self.eat(player)
-                player.display_stats()
-                self.turns_to_monster -= 1
-            elif choice == "3":
-                self.sleep(player)
-                player.display_stats()
-                self.turns_to_monster -= 1
-            elif choice == "6":
-                self.gym(player)
-            elif choice == "4":
-                player.display_stats()
-            elif choice == "5":
-                player.display_moves()
-            print()
-        else:
-            print("invalid choice \n")
+    def do(self, player, choice_label: str):
+        if choice_label not in text.choices:
+            raise ValueError(f"Choice {choice_label} not found")
+        choice = text.choices[choice_label]
+        print(choice.text)
+        if choice.label == "Exercise":
+            self.exercise(player)
+            player.display_stats()
+        elif choice.label == "Eat":
+            self.eat(player)
+            player.display_stats()
+        elif choice.label == "Sleep":
+            self.sleep(player)
+            player.display_stats()
+        elif choice.label == "Go to Pokemon Gym":
+            self.gym(player)
+        elif choice.label == "Display Stats":
+            player.display_stats()
+        elif choice.label == "Display Moves":
+            player.display_moves()
+        self.turns_to_monster -= choice.turns_used
 
         if self.turns_to_monster == 0:
             self.final_battle(player)
