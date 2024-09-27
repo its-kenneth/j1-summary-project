@@ -147,13 +147,6 @@ class Game:
     def options(self):
         return list(text.choices.keys())
 
-    # def option_input(self):
-    #     choice = input("Enter an option: ")
-    #     return choice
-
-    # def select_option(self, opt):
-    #     self.choice = opt
-
     def use_turns(self, n: int) -> None:
         """Use up n turns. n must be zero or positive."""
         if n < 0:
