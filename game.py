@@ -62,6 +62,41 @@ class Game:
         player.moves.append(create_move(text.moves, creature.get_move_dropped()))
         return True
 
+    def monster_battle(self, player: Player, monster: Monster):
+        print("You have entered the final battle!\n")
+
+        while monster.hp > 0:
+            print(
+                f"{monster.get_name()} has {int(monster.get_hp())}HP left and {monster.get_attack()} attack"
+            )
+            print(f"You have {player.get_hp()}HP left.\n")
+
+            used_move, damage = player.use_move(monster)
+            print()
+
+            if used_move == "flee":
+                print(
+                    "You coward! The monster struck a fatal blow as you were fleeing, causing you to bleed to death."
+                )
+                player.hp = 0
+                return
+
+            print(
+                f"{player.get_name()} used {used_move.get_name()}! It dealt {-int(damage)} damage!"
+            )
+
+            if monster.hp <= 0:
+                print("You won! Thank you for playing!")
+                sys.exit(0)
+            else:
+                print(
+                    f"{monster.get_name()} lashed out! It dealt {monster.get_attack()} damage!\n"
+                )
+
+                player.change_hp(-monster.get_attack())
+                if player.hp <= 0:
+                        return
+
     def gym(self, player):
         monsteroptions = [
             f"{creature.get_name()} ({creature.get_hp()}HP, {creature.get_attack()} attack)"
@@ -125,7 +160,7 @@ class Game:
 
     def final_battle(self, player):
         monster = create_monster()
-        monster.battle(player)
+        self.monster_battle(player, monster)
 
     def game_over(self, player):
         return player.get_hp() <= 0
