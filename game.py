@@ -74,21 +74,14 @@ class Game:
             ))
             if creature.hp <= 0:
                 break
-            else:
-                print(text.attack_report(
-                    name=creature.get_name(),
-                    move=creature.get_move_dropped(),
-                    damage=creature.get_attack()
-                ))
-                player.change_hp(-creature.get_attack())
-                if player.hp <= 0:
-                    return False
-        print(text.battle_report(
-            victor="You",
-            loser=creature.get_name(),
-            loot=creature.get_move_dropped()
-        ))
-        player.moves.append(create_move(text.moves, creature.get_move_dropped()))
+            print(text.attack_report(
+                name=creature.get_name(),
+                move=creature.get_move_dropped(),
+                damage=creature.get_attack()
+            ))
+            player.change_hp(-creature.get_attack())
+            if player.hp <= 0:
+                return False
         return True
 
     def monster_battle(self, player: Player, monster: Monster):
@@ -124,7 +117,7 @@ class Game:
                 ))
                 player.change_hp(-monster.get_attack())
                 if player.hp <= 0:
-                        return
+                    return
 
     def gym(self, player):
         monsteroptions = [
@@ -139,6 +132,14 @@ class Game:
             self.turns_to_monster -= 1
             won = self.battle(player, self.creatures[choice])
             if won:
+                print(text.battle_report(
+                    victor="You",
+                    loser=creature.get_name(),
+                    loot=creature.get_move_dropped()
+                ))
+                player.moves.append(
+                   create_move(text.moves, creature.get_move_dropped())
+                )
                 self.creatures.pop(choice)
         elif choice == len(monsteroptions):
             print(text.leave_gym_report("You"))
