@@ -171,8 +171,8 @@ def battle_report(victor: str, loser: str, loot: str) -> str:
 def win_report(name: str) -> str:
     return f"{name} won! Thank you for playing!"
 
-def final_battle_report(name: str) -> str:
-    return f"{name} {"have" if name == "You" else "has"} entered the final battle!"
+def battle_report(name: str, final: bool = False) -> str:
+    return f"{name} {"have" if name == "You" else "has"} entered {"the final" if final else "a"} battle!"
 
 def leave_gym_report(name: str) -> str:
     return f"{name} left the gym..."

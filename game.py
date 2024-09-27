@@ -51,7 +51,7 @@ class Game:
         return player.moves[choice], damage
 
     def battle(self, player: Player, creature: Creature):
-        print("You have entered a battle!\n")
+        print(text.battle_report("You"))
 
         while creature.hp > 0:
             print(text.creature_report(
@@ -92,7 +92,7 @@ class Game:
         return True
 
     def monster_battle(self, player: Player, monster: Monster):
-        print(text.final_battle_report("You"))
+        print(text.battle_report("You", final=True))
 
         while monster.hp > 0:
             print(text.creature_report(
