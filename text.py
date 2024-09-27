@@ -1,3 +1,30 @@
+"""text.py
+
+Contains data for text used in the game
+"""
+
+class Choice:
+    """Encapsulates player choices
+
+    Attributes:
+    - label: str
+      A label for the choice
+    - text: str
+      The text to display when the choice is selected
+    - turns_used: int
+      The number of turns the choice uses up
+    """
+    def __init__(
+            self,
+            label: str,
+            text: str,
+            turns_used: int = 0
+    ):
+        self.label = label
+        self.text = text
+        self.turns_used = turns_used
+
+
 # option text
 option_stack = [
     "Exercise", "Eat", "Sleep", "Display Stats", "Display Moves",
@@ -10,6 +37,16 @@ choice_stack = [
     "You slept! Your hp and move pp have been restored to full!", "Stats:\n",
     "Moves:\n", "You enter the Pokemon Gym..."
 ]
+
+choices = {
+    "Exercise": Choice("Exercise", "You exercise", 1),
+    "Eat": Choice("Eat", "You eat", 1),
+    "Sleep": Choice("Sleep", "You slept! Your hp and move pp have been restored to full!", 1),
+    "Display Stats": Choice("Display Stats", "Stats:\n", 0),
+    "Display Moves": Choice("Display Moves", "Moves:\n", 0),
+    "Go to Pokemon Gym": Choice("Go to Pokemon Gym", "You enter the Pokemon Gym...", 0)
+}
+
 
 # final msgs
 final_win = "You won!"
