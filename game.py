@@ -27,7 +27,7 @@ class Game:
 
     def gym(self, player):
         monsteroptions = [
-            f"{creature.get_name()} ({creatures.get_hp()}HP, {creature.get_attack()} attack)"
+            f"{creature.get_name()} ({creature.get_hp()}HP, {creature.get_attack()} attack)"
             for creature in self.creatures
         ]
         choice = text.prompt_valid_choice(
@@ -36,9 +36,9 @@ class Game:
             prompt="Which Pokemon would you like to battle: ")
         if choice < len(monsteroptions):
             self.turns_to_monster -= 1
-            won = self.creatures[int(battle_choice) - 1].battle(player)
+            won = self.creatures[choice].battle(player)
             if won:
-                self.creatures.pop(int(battle_choice) - 1)
+                self.creatures.pop(choice)
         elif choice == len(monsteroptions):
             print("You left the gym...")
             return
