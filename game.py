@@ -53,6 +53,14 @@ class Game:
     # def select_option(self, opt):
     #     self.choice = opt
 
+    def use_turns(self, n: int) -> None:
+        """Use up n turns. n must be zero or positive."""
+        if n < 0:
+            raise ValueError("n must be zero or positive")
+        if self.turns_to_monster <= n:
+            raise ValueError("Not enough turns to use")
+        self.turns_to_monster -= n
+
     def do(self, player, choice_label: str):
         if choice_label not in text.choices:
             raise ValueError(f"Choice {choice_label} not found")
@@ -73,7 +81,7 @@ class Game:
             player.display_stats()
         elif choice.label == "Display Moves":
             player.display_moves()
-        self.turns_to_monster -= choice.turns_used
+        self.use_turns(choice.turns_used)
 
         if self.turns_to_monster == 0:
             self.final_battle(player)
