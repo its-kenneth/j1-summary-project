@@ -31,10 +31,10 @@ PP: {move.get_current_power()}/{move.get_power_limit()}
 """)
         print()
 
-    def sleep(self):
-        self.change_hp(self.get_maxhp())
-        for i in range(len(self.moves)):
-            self.moves[i].set_current_power(self.moves[i].get_power_limit())
+    # def sleep(self):
+    #     self.change_hp(self.get_maxhp())
+    #     for i in range(len(self.moves)):
+    #         self.moves[i].set_current_power(self.moves[i].get_power_limit())
 
     def use_move(self, creature):
         choice = 0

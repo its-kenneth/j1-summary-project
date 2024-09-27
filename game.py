@@ -26,6 +26,13 @@ class Game:
         self.creatures = []
         self.create_creature()
 
+    def restore_hp(self, player: Player):
+        player.change_hp(player.get_maxhp())
+
+    def restore_pp(self, player: Player):
+        for i in range(len(player.moves)):
+            player.moves[i].set_current_power(player.moves[i].get_power_limit())
+
     def battle(self, player: Player, creature: Creature):
         print("You have entered a battle!\n")
 
@@ -127,7 +134,8 @@ class Game:
         player.change_attack(10)
 
     def sleep(self, player):
-        player.sleep()
+        self.restore_hp(player)
+        self.restore_pp(player)
 
     def eat(self, player):
         player.increase_hp(15)
