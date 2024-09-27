@@ -33,8 +33,7 @@ class Game:
         choice = text.prompt_valid_choice(
             preamble="",
             options=monsteroptions + ["Go back"],
-            prompt="Which Pokemon would you like to battle: "
-        )
+            prompt="Which Pokemon would you like to battle: ")
         if choice < len(monsteroptions):
             self.turns_to_monster -= 1
             won = self.creatures[int(battle_choice) - 1].battle(player)

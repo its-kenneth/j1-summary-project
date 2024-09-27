@@ -3,10 +3,11 @@ from moves import Move
 from character import Character
 
 
-def create_move(moves, name):
+def create_move(moves, name) -> Move:
     for move in moves:
         if move["name"] == name:
             return Move(move["name"], move["multiplier"], move["power_limit"])
+    raise ValueError(f"Move {name} not found")
 
 
 class Player(Character):
@@ -37,15 +38,11 @@ PP: {move.get_current_power()}/{move.get_power_limit()}
     def use_move(self, creature):
         choice = 0
 
-        movenames = [
-            move.get_name() for move in self.moves
-            if move.can_use()
-        ]
+        movenames = [move.get_name() for move in self.moves if move.can_use()]
         choice = text.prompt_valid_choice(
             preamble="What move would you like to use?",
             options=movenames + ["Run"],
-            prompt="Enter option: "
-        )
+            prompt="Enter option: ")
         if choice == len(self.moves):
             print("You flee from the battle...")
             return "flee", "flee"

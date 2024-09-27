@@ -98,16 +98,14 @@ fight monsters in gym to collect limited edition moves to have stronger attacks
     else:
         print("ok bye bye go start the game")
 
-def prompt_valid_choice(
-        options: list[str],
-        preamble: str,
-        prompt: str
-):
+
+def prompt_valid_choice(options: list[str], preamble: str, prompt: str):
     print(preamble)
     for i in range(len(options)):
         print(f"{i+1}. {options[i]}")
     choice = input(prompt)
-    while not choice.isdecimal() and (int(choice) - 1) not in range(0, len(options)):
+    while not choice.isdecimal() and (int(choice) - 1) not in range(
+            0, len(options)):
         print("Invalid choice, pick a number from 1 to", len(options))
         choice = input(prompt)
     return int(choice) - 1
