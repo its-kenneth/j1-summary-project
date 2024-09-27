@@ -1,6 +1,7 @@
 import text
 from creature import Creature
 from monster import Monster
+from player import Player, create_move
 
 
 def create_monster():
@@ -25,6 +26,35 @@ class Game:
         self.creatures = []
         self.create_creature()
 
+    def battle(self, player: Player, creature: Creature):
+        print("You have entered a battle!\n")
+
+        while creature.hp > 0:
+            print(
+                f"{creature.get_name()} has {int(creature.get_hp())}HP left and {creature.get_attack()} attack"
+            )
+            print(f"You have {player.get_hp()}HP left.\n")
+            used_move, damage = player.use_move(self)
+            print()
+            if used_move == "flee":
+                creature.change_hp(self.maxhp)
+                return False
+            print(
+                f"{player.get_name()} used {used_move.get_name()}! It dealt {-int(damage)} damage!"
+            )
+            if creature.hp <= 0:
+                break
+            else:
+                print(
+                    f"{creature.get_name()} used {creature.get_move_dropped()}! It dealt {creature.get_attack()} damage!\n"
+                )
+                player.change_hp(-creature.get_attack())
+                if player.hp <= 0:
+                    return False
+        print(f"You won! {creature.get_name()} dropped {creature.get_move_dropped()}")
+        player.moves.append(create_move(text.moves, creature.get_move_dropped()))
+        return True
+
     def gym(self, player):
         monsteroptions = [
             f"{creature.get_name()} ({creature.get_hp()}HP, {creature.get_attack()} attack)"
@@ -36,7 +66,7 @@ class Game:
             prompt="Which Pokemon would you like to battle: ")
         if choice < len(monsteroptions):
             self.turns_to_monster -= 1
-            won = self.creatures[choice].battle(player)
+            won = self.battle(player, self.creatures[choice])
             if won:
                 self.creatures.pop(choice)
         elif choice == len(monsteroptions):
