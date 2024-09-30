@@ -50,7 +50,7 @@ class Game:
         player.moves[choice].used_moves()
         return player.moves[choice], damage
 
-    def battle(self, player: Player, creature: Creature):
+    def creature_battle(self, player: Player, creature: Creature):
         print(text.battle_report("You"))
 
         while creature.hp > 0:
@@ -130,7 +130,7 @@ class Game:
             prompt="Which Pokemon would you like to battle: ")
         if choice < len(monsteroptions):
             self.turns_to_monster -= 1
-            won = self.battle(player, self.creatures[choice])
+            won = self.creature_battle(player, self.creatures[choice])
             if won:
                 print(text.battle_report(
                     victor="You",
