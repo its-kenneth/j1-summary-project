@@ -1,5 +1,6 @@
 import sys
 import text
+from character import Character
 from creature import Creature
 from monster import Monster
 import moves
@@ -9,6 +10,21 @@ from player import Player, create_move
 def create_monster():
     return Monster(text.monster["name"], text.monster["hp"],
                    text.monster["attack"])
+
+
+class BattleResult:
+    """Encapsulates information about the outcome of a single round of battle.
+
+    Possible outcomes:
+    - flee: attacker fled
+    - hit: attacker hit defender without defender dying
+    - victory: attacker struck defender dead
+    """
+    def __init__(self, attacker: Character, defender: Character, outcome: str):
+        self.attacker = attacker
+        self.defender = defender
+        self.outcome = outcome
+
 
 
 class Game:
