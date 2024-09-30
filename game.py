@@ -89,17 +89,11 @@ class Game:
         """Applies the effect of attacker using a move on the defender.
         Returns the damage dealt to defender.
         """
+        damage = -attacker.get_attack()
+        defender.change_hp(damage)
         if isinstance(attacker, Player):
-            assert isinstance(move, Move)
-            damage = -(attacker.get_attack() * move.get_multiplier())
-            defender.change_hp(damage)
             move.used_moves()
-            return damage
-        elif isinstance(attacker, Creature | Monster):
-            damage = -attacker.get_attack()
-            defender.change_hp(damage)
-            return damage
-        raise TypeError(f"{attacker}: invalid attacker type")
+        return damage
 
     def battle_round(self, attacker: Character, defender: Character) - BattleResult:
         move = self.choose_move(attacker)
