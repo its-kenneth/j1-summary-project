@@ -56,7 +56,7 @@ class Game:
         elif isinstance(enemy, Monster):
             print(text.battle_report("You"), final=True)
 
-        while enemy.hp > 0:
+        while enemy.is_dead():
             print(text.creature_report(
                 name=enemy.get_name(),
                 hp=enemy.get_hp(),
@@ -69,6 +69,7 @@ class Game:
             used_move, damage = self.use_move(player, enemy)
             if used_move == "flee":
                 if isinstance(enemy, Creature):
+                    print(text.flee_report("You"))
                     creature.change_hp(creature.maxhp)
                     return False
                 elif isinstance(enemy, Monster):
