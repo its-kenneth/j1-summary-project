@@ -65,7 +65,7 @@ class Game:
         """Have character select a move to use, and return the selected move."""
         if isinstance(character, Player):
             choice = 0
-            movenames = [move.get_name() for move in character.moves if move.can_use()]
+            movenames = [str(move) for move in character.moves if move.can_use()]
             choice = text.prompt_valid_choice(
                 preamble="What move would you like to use?",
                 options=movenames + ["Run"],
@@ -120,7 +120,7 @@ class Game:
         while not attacker.is_dead():
             if isinstance(attacker, Player):
                 print(text.creature_report(
-                    name=defender.get_name(),
+                    name=str(defender),
                     hp=defender.get_hp(),
                     attack=defender.get_attack()
                 ))
@@ -133,8 +133,8 @@ class Game:
             if result.outcome == "flee":
                 break
             print(text.attack_report(
-                name=attacker.get_name(),
-                move=result.move.get_name(),
+                name=str(attacker),
+                move=str(result.move),
                 damage=move=result.damage,
             ))
             attacker, defender = defender, attacker
@@ -162,7 +162,7 @@ class Game:
 
     def gym(self, player):
         monsteroptions = [
-            f"{creature.get_name()} ({creature.get_hp()}HP, {creature.get_attack()} attack)"
+            f"{creature} ({creature.get_hp()}HP, {creature.get_attack()} attack)"
             for creature in self.creatures
         ]
         choice = text.prompt_valid_choice(
@@ -175,8 +175,8 @@ class Game:
             if won:
                 print(text.battle_report(
                     victor="You",
-                    loser=creature.get_name(),
-                    loot=creature.get_move().name
+                    loser=str(creature),
+                    loot=str(creature.get_move())
                 ))
                 player.add_move(creature.get_move())
                 self.creatures.pop(choice)

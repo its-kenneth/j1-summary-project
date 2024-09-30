@@ -9,6 +9,9 @@ class CharacterMove(Move):
         self.power_limit = power_limit
         self.current_power = power_limit
 
+    def __str__(self) -> str:
+        return self.name
+
     def get_name(self) -> str:
         return self.name
 
