@@ -1,6 +1,5 @@
 from character import Character
 import moves
-from moves import Move
 
 
 class Creature(Character):
