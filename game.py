@@ -2,6 +2,7 @@ import sys
 import text
 from creature import Creature
 from monster import Monster
+from moves import Move
 from player import Player, create_move
 
 
@@ -49,6 +50,39 @@ class Game:
         creature.change_hp(damage)
         player.moves[choice].used_moves()
         return player.moves[choice], damage
+
+    def choose_move(self, character: Player | Creature | Monster) -> Move | str | None:
+        if isinstance(character, Player):
+            choice = 0
+            movenames = [move.get_name() for move in character.moves if move.can_use()]
+            choice = text.prompt_valid_choice(
+                preamble="What move would you like to use?",
+                options=movenames + ["Run"],
+                prompt="Enter option: "
+            )
+            return character.moves[choice]
+        elif isinstance(character, Creature):
+            return character.get_move_dropped()
+        elif isinstance(character, Monster):
+            return None
+
+    def attack(
+            self,
+            attacker: Character,
+            move: Move | str | None,
+            defender: Character
+        ) -> tuple[Move | str | None, int]:
+        if isinstance(attacker, Player):
+            assert isinstance(move, Move)
+            damage = -(attacker.get_attack() * move.get_multiplier())
+            defender.change_hp(damage)
+            move.used_moves()
+            return move, damage
+        elif isinstance(attacker, Creature | Monster):
+            damage = -attacker.get_attack()
+            defender.change_hp(damage)
+            return move, damage
+        raise TypeError(f"{attacker}: invalid attacker type")
 
     def battle(self, player: Player, enemy: Creature | Monster):
         if isinstance(enemy, Creature):
