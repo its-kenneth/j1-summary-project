@@ -106,8 +106,7 @@ class Game:
             ))
             move = self.choose_move(player)
             damage = self.attack(player, move, enemy)
-            # used_move, damage = self.use_move(player, enemy)
-            if used_move == "flee":
+            if move == "flee":
                 if isinstance(enemy, Creature):
                     print(text.flee_report("You"))
                     creature.change_hp(creature.maxhp)
@@ -118,7 +117,7 @@ class Game:
                     return False
             print(text.attack_report(
                 name=player.get_name(),
-                move=used_move.get_name(),
+                move=move.get_name(),
                 damage=-int(damage),
             ))
             # If enemy killed
@@ -130,19 +129,21 @@ class Game:
                     sys.exit(0)
 
             # Continue battle
+            move = self.choose_move(enemy)
+            damage = self.attack(enemy, move, player)
             if isinstance(enemy, Creature):
                 print(text.attack_report(
                     name=enemy.get_name(),
                     move=enemy.get_move().name,
                     damage=enemy.get_attack()
                 ))
-                player.change_hp(-enemy.get_attack())
+                # player.change_hp(-enemy.get_attack())
             else:
                 print(text.monster_attack_report(
                     name=enemy.get_name(),
                     damage=enemy.get_attack()
                 ))
-                player.change_hp(-enemy.get_attack())
+                # player.change_hp(-enemy.get_attack())
             if player.is_dead():
                 return False
         return True
