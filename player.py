@@ -17,17 +17,17 @@ class Player(Character):
         super().__init__()
         self.moves = [create_move(text.moves, "Kick")]
 
-    def add_move(self, move: moves.CharacterMove):
+    def add_move(self, move: moves.CharacterMove) -> None:
         self.moves.append(move)
 
-    def set_name(self):
+    def set_name(self) -> None:
         self.name = input("Enter the name of user: ")
 
-    def display_stats(self):
+    def display_stats(self) -> None:
         print(f"HP: {self.hp}/{self.maxhp}")
         print(f"Attack: {self.attack}")
 
-    def display_moves(self):
+    def display_moves(self) -> None:
         for move in self.moves:
             print(f"""Name: {move.get_name()}
 Multiplier: {move.get_multiplier()}
