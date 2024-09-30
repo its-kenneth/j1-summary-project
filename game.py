@@ -35,21 +35,21 @@ class Game:
         for i in range(len(player.moves)):
             player.moves[i].set_current_power(player.moves[i].get_power_limit())
 
-    def use_move(self, player: Player, creature: Creature):
-        choice = 0
-        movenames = [move.get_name() for move in player.moves if move.can_use()]
-        choice = text.prompt_valid_choice(
-            preamble="What move would you like to use?",
-            options=movenames + ["Run"],
-            prompt="Enter option: ")
-        if choice == len(player.moves):
-            print(text.flee_report("You"))
-            return "flee", "flee"
+    # def use_move(self, player: Player, creature: Creature):
+    #     choice = 0
+    #     movenames = [move.get_name() for move in player.moves if move.can_use()]
+    #     choice = text.prompt_valid_choice(
+    #         preamble="What move would you like to use?",
+    #         options=movenames + ["Run"],
+    #         prompt="Enter option: ")
+    #     if choice == len(player.moves):
+    #         print(text.flee_report("You"))
+    #         return "flee", "flee"
 
-        damage = -(player.get_attack() * player.moves[choice].get_multiplier())
-        creature.change_hp(damage)
-        player.moves[choice].used_moves()
-        return player.moves[choice], damage
+    #     damage = -(player.get_attack() * player.moves[choice].get_multiplier())
+    #     creature.change_hp(damage)
+    #     player.moves[choice].used_moves()
+    #     return player.moves[choice], damage
 
     def choose_move(self, character: Player | Creature | Monster) -> Move:
         if isinstance(character, Player):
@@ -100,7 +100,9 @@ class Game:
                 name="You",
                 hp=player.get_hp(),
             ))
-            used_move, damage = self.use_move(player, enemy)
+            move = self.choose_move(player)
+            move, damage = self.attack(player, move, enemy)
+            # used_move, damage = self.use_move(player, enemy)
             if used_move == "flee":
                 if isinstance(enemy, Creature):
                     print(text.flee_report("You"))
