@@ -18,6 +18,9 @@ class Character:
     def get_attack(self):
         return self.attack
 
+    def is_dead(self) -> bool:
+        return self.hp <= 0
+
     def change_hp(self, change):
         self.hp += change
         if self.hp > self.maxhp:

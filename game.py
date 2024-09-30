@@ -81,7 +81,7 @@ class Game:
                 damage=-int(damage),
             ))
             # If enemy killed
-            if enemy.hp <= 0:
+            if enemy.is_dead():
                 if isinstance(enemy, Creature):
                     break
                 if isinstance(enemy, Monster):
@@ -102,7 +102,7 @@ class Game:
                     damage=enemy.get_attack()
                 ))
                 player.change_hp(-enemy.get_attack())
-            if player.hp <= 0:
+            if player.is_dead():
                 return False
         return True
 
@@ -173,7 +173,7 @@ class Game:
         self.battle(player, monster)
 
     def game_over(self, player):
-        return player.get_hp() <= 0
+        return player.is_dead()
 
     def exercise(self, player):
         player.change_attack(10)
