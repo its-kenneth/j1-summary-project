@@ -20,10 +20,20 @@ class BattleResult:
     - hit: attacker hit defender without defender dying
     - victory: attacker struck defender dead
     """
-    def __init__(self, attacker: Character, defender: Character, outcome: str):
+    def __init__(
+            self,
+            attacker: Character,
+            defender: Character,
+            outcome: str,
+            move: Move | None = None,
+            damage: int = 0
+    ):
         self.attacker = attacker
         self.defender = defender
         self.outcome = outcome
+
+    def __repr__(self) -> str:
+        return f"BattleResult(attacker={self.attacker}, defender={self.defender}, outcome={self.outcome!r}, move={self.move}, damage={self.damage})"
 
 
 
@@ -91,6 +101,15 @@ class Game:
             return damage
         raise TypeError(f"{attacker}: invalid attacker type")
 
+    def battle_round(self, attacker: Character, defender: Character) - BattleResult:
+        move = self.choose_move(attacker)
+        if isinstance(move, moves.Flee):
+            return BattleResult(attacker, defender, "flee")
+        damage = self.attack(attacker, move, defender)
+        if defender.is_dead():
+            return BattleResult(attacker, defender, "victory", move, damage)
+        return BattleResult(attacker, defender, "hit", move, damage)
+
     def battle(self, player: Player, enemy: Creature | Monster):
         if isinstance(enemy, Creature):
             print(text.battle_report("You"))
@@ -110,35 +129,36 @@ class Game:
                     hp=attacker.get_hp(),
                 ))
 
-            move = self.choose_move(attacker)
-            damage = self.attack(attacker, move, defender)
-            if isinstance(move, moves.Flee):  # assume only player can flee
-                if isinstance(defender, Creature):
-                    print(text.flee_report("You"))
-                    defender.change_hp(defender.maxhp)
-                    return False
-                elif isinstance(defender, Monster):
-                    print(text.flee_report("You", fatal=True))
-                    player.hp = 0
-                    return False
-
+            result = self.battle_round(attacker, defender)
+            if result.outcome == "flee":
+                break
             print(text.attack_report(
                 name=attacker.get_name(),
-                move=move.get_name(),
-                damage=-int(damage),
+                move=result.move.get_name(),
+                damage=move=result.damage,
             ))
-
-            # If attacker or defender killed
-            if defender.is_dead():
-                if isinstance(defender, Creature):
-                    break
-                if isinstance(defender, Monster):
-                    print(text.win_report("You"))
-                    sys.exit(0)
-            elif player.is_dead():
-                return False
             attacker, defender = defender, attacker
-        return True
+
+        # Handle battle outcome
+        if result.outcome == "flee":
+            if isinstance(defender, Creature):
+                print(text.flee_report("You"))
+                defender.change_hp(defender.maxhp)
+                return False
+            elif isinstance(defender, Monster):
+                print(text.flee_report("You", fatal=True))
+                player.hp = 0
+                return False
+        elif result.outcome == "victory" and result.attacker == player:
+            if isinstance(result.defender, Monster):
+                print(text.win_report("You"))
+                sys.exit(0)
+            else:
+                return True
+        elif result.outcome == "victory" and result.defender == player:
+            return False
+        else:
+            raise ValueError(f"Unrecognised battle result: {result}")
 
     def gym(self, player):
         monsteroptions = [
