@@ -62,7 +62,7 @@ class Game:
             )
             return character.moves[choice]
         elif isinstance(character, Creature):
-            return character.get_move_dropped()
+            return character.get_move()
         elif isinstance(character, Monster):
             return character.get_move()
 
@@ -127,7 +127,7 @@ class Game:
             if isinstance(enemy, Creature):
                 print(text.attack_report(
                     name=enemy.get_name(),
-                    move=enemy.get_move_dropped().name,
+                    move=enemy.get_move().name,
                     damage=enemy.get_attack()
                 ))
                 player.change_hp(-enemy.get_attack())
@@ -157,9 +157,9 @@ class Game:
                 print(text.battle_report(
                     victor="You",
                     loser=creature.get_name(),
-                    loot=creature.get_move_dropped().name
+                    loot=creature.get_move().name
                 ))
-                player.moves.append(creature.get_move_dropped())
+                player.moves.append(creature.get_move())
                 self.creatures.pop(choice)
         elif choice == len(monsteroptions):
             print(text.leave_gym_report("You"))
