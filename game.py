@@ -52,6 +52,7 @@ class Game:
     #     return player.moves[choice], damage
 
     def choose_move(self, character: Player | Creature | Monster) -> Move:
+        """Have character select a move to use, and return the selected move."""
         if isinstance(character, Player):
             choice = 0
             movenames = [move.get_name() for move in character.moves if move.can_use()]
@@ -71,17 +72,20 @@ class Game:
             attacker: Character,
             move: Move,
             defender: Character
-        ) -> tuple[Move, int]:
+        ) -> int:
+        """Applies the effect of attacker using a move on the defender.
+        Returns the damage dealt to defender.
+        """
         if isinstance(attacker, Player):
             assert isinstance(move, Move)
             damage = -(attacker.get_attack() * move.get_multiplier())
             defender.change_hp(damage)
             move.used_moves()
-            return move, damage
+            return damage
         elif isinstance(attacker, Creature | Monster):
             damage = -attacker.get_attack()
             defender.change_hp(damage)
-            return move, damage
+            return damage
         raise TypeError(f"{attacker}: invalid attacker type")
 
     def battle(self, player: Player, enemy: Creature | Monster):
@@ -101,7 +105,7 @@ class Game:
                 hp=player.get_hp(),
             ))
             move = self.choose_move(player)
-            move, damage = self.attack(player, move, enemy)
+            damage = self.attack(player, move, enemy)
             # used_move, damage = self.use_move(player, enemy)
             if used_move == "flee":
                 if isinstance(enemy, Creature):
