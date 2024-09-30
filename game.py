@@ -106,75 +106,6 @@ class Game:
                 return False
         return True
 
-    def creature_battle(self, player: Player, creature: Creature):
-        print(text.battle_report("You"))
-
-        while creature.hp > 0:
-            print(text.creature_report(
-                name=creature.get_name(),
-                hp=creature.get_hp(),
-                attack=creature.get_attack()
-            ))
-            print(text.player_report(
-                name="You",
-                hp=player.get_hp(),
-            ))
-            used_move, damage = self.use_move(player, creature)
-            if used_move == "flee":
-                creature.change_hp(creature.maxhp)
-                return False
-            print(text.attack_report(
-                name=player.get_name(),
-                move=used_move.get_name(),
-                damage=-int(damage),
-            ))
-            if creature.hp <= 0:
-                break
-            print(text.attack_report(
-                name=creature.get_name(),
-                move=creature.get_move_dropped(),
-                damage=creature.get_attack()
-            ))
-            player.change_hp(-creature.get_attack())
-            if player.hp <= 0:
-                return False
-        return True
-
-    def monster_battle(self, player: Player, monster: Monster):
-        print(text.battle_report("You", final=True))
-
-        while monster.hp > 0:
-            print(text.creature_report(
-                name=monster.get_name(),
-                hp=monster.get_hp(),
-                attack=monster.get_attack()
-            ))
-            print(text.player_report(
-                name="You",
-                hp=player.get_hp(),
-            ))
-            used_move, damage = self.use_move(player, monster)
-            if used_move == "flee":
-                print(text.flee_report("You", fatal=True))
-                player.hp = 0
-                return
-            print(text.attack_report(
-                name=player.get_name(),
-                move=used_move.get_name(),
-                damage=-int(damage)
-            ))
-            if monster.hp <= 0:
-                print(text.win_report("You"))
-                sys.exit(0)
-            else:
-                print(text.monster_attack_report(
-                    name=monster.get_name(),
-                    damage=monster.get_attack()
-                ))
-                player.change_hp(-monster.get_attack())
-                if player.hp <= 0:
-                    return
-
     def gym(self, player):
         monsteroptions = [
             f"{creature.get_name()} ({creature.get_hp()}HP, {creature.get_attack()} attack)"
@@ -186,7 +117,7 @@ class Game:
             prompt="Which Pokemon would you like to battle: ")
         if choice < len(monsteroptions):
             self.turns_to_monster -= 1
-            won = self.creature_battle(player, self.creatures[choice])
+            won = self.battle(player, self.creatures[choice])
             if won:
                 print(text.battle_report(
                     victor="You",
@@ -239,7 +170,7 @@ class Game:
 
     def final_battle(self, player):
         monster = create_monster()
-        self.monster_battle(player, monster)
+        self.battle(player, monster)
 
     def game_over(self, player):
         return player.get_hp() <= 0
