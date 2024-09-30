@@ -1,4 +1,7 @@
 class Move:
+    """Base class"""
+
+class CharacterMove(Move):
 
     def __init__(self, name: str, multiplier: float, power_limit: int):
         self.name = name
@@ -35,3 +38,7 @@ class Move:
 
     def used_moves(self):
         self.current_power -= 1
+
+
+class Flee(Move):
+    pass

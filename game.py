@@ -2,7 +2,7 @@ import sys
 import text
 from creature import Creature
 from monster import Monster
-from moves import Move
+import moves
 from player import Player, create_move
 
 
@@ -51,7 +51,7 @@ class Game:
     #     player.moves[choice].used_moves()
     #     return player.moves[choice], damage
 
-    def choose_move(self, character: Player | Creature | Monster) -> Move:
+    def choose_move(self, character: Player | Creature | Monster) -> moves.Move:
         """Have character select a move to use, and return the selected move."""
         if isinstance(character, Player):
             choice = 0
@@ -61,7 +61,10 @@ class Game:
                 options=movenames + ["Run"],
                 prompt="Enter option: "
             )
-            return character.moves[choice]
+            if choice == len(movenames):
+                return Flee()
+            else:
+                return character.moves[choice]
         elif isinstance(character, Creature):
             return character.get_move()
         elif isinstance(character, Monster):
@@ -70,7 +73,7 @@ class Game:
     def attack(
             self,
             attacker: Character,
-            move: Move,
+            move: moves.CharacterMove,
             defender: Character
         ) -> int:
         """Applies the effect of attacker using a move on the defender.
@@ -106,7 +109,7 @@ class Game:
             ))
             move = self.choose_move(player)
             damage = self.attack(player, move, enemy)
-            if move == "flee":
+            if isinstance(move, moves.Flee):
                 if isinstance(enemy, Creature):
                     print(text.flee_report("You"))
                     creature.change_hp(creature.maxhp)

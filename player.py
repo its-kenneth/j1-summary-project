@@ -1,12 +1,13 @@
 import text
+import moves
 from moves import Move
 from character import Character
 
 
-def create_move(moves, name) -> Move:
+def create_move(moves, name) -> moves.CharacterMove:
     for move in moves:
         if move["name"] == name:
-            return Move(move["name"], move["multiplier"], move["power_limit"])
+            return moves.CharacterMove(move["name"], move["multiplier"], move["power_limit"])
     raise ValueError(f"Move {name} not found")
 
 
@@ -16,7 +17,7 @@ class Player(Character):
         super().__init__()
         self.moves = [create_move(text.moves, "Kick")]
 
-    def add_move(self, move: Move):
+    def add_move(self, move: moves.CharacterMove):
         self.moves.append(move)
 
     def set_name(self):
