@@ -96,6 +96,7 @@ class Game:
         return damage
 
     def battle_round(self, attacker: Character, defender: Character) - BattleResult:
+        """Handle one round of battle and return a battle result."""
         move = self.choose_move(attacker)
         if isinstance(move, moves.Flee):
             return BattleResult(attacker, defender, "flee")
@@ -105,6 +106,10 @@ class Game:
         return BattleResult(attacker, defender, "hit", move, damage)
 
     def battle(self, player: Player, enemy: Creature | Monster):
+        """Handle a battle between player and creature/monster.
+        The battle continues until either combatant is dead.
+        Battle results are reported.
+        """
         if isinstance(enemy, Creature):
             print(text.battle_report("You"))
         elif isinstance(enemy, Monster):
