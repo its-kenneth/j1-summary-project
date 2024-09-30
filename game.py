@@ -50,6 +50,62 @@ class Game:
         player.moves[choice].used_moves()
         return player.moves[choice], damage
 
+    def battle(self, player: Player, enemy: Creature | Monster):
+        if isinstance(enemy, Creature):
+            print(text.battle_report("You"))
+        elif isinstance(enemy, Monster):
+            print(text.battle_report("You"), final=True)
+
+        while enemy.hp > 0:
+            print(text.creature_report(
+                name=enemy.get_name(),
+                hp=enemy.get_hp(),
+                attack=enemy.get_attack()
+            ))
+            print(text.player_report(
+                name="You",
+                hp=player.get_hp(),
+            ))
+            used_move, damage = self.use_move(player, enemy)
+            if used_move == "flee":
+                if isinstance(enemy, Creature):
+                    creature.change_hp(creature.maxhp)
+                    return False
+                elif isinstance(enemy, Monster):
+                    print(text.flee_report("You", fatal=True))
+                    player.hp = 0
+                    return False
+            print(text.attack_report(
+                name=player.get_name(),
+                move=used_move.get_name(),
+                damage=-int(damage),
+            ))
+            # If enemy killed
+            if enemy.hp <= 0:
+                if isinstance(enemy, Creature):
+                    break
+                if isinstance(enemy, Monster):
+                    print(text.win_report("You"))
+                    sys.exit(0)
+
+            # Continue battle
+            if isinstance(enemy, Creature):
+                print(text.attack_report(
+                    name=enemy.get_name(),
+                    move=enemy.get_move_dropped(),
+                    damage=enemy.get_attack()
+                ))
+                player.change_hp(-enemy.get_attack())
+            else:
+                print(text.monster_attack_report(
+                    name=enemy.get_name(),
+                    damage=enemy.get_attack()
+                ))
+                player.change_hp(-enemy.get_attack())
+            if player.hp <= 0:
+                return False
+        return True
+
     def creature_battle(self, player: Player, creature: Creature):
         print(text.battle_report("You"))
 
