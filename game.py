@@ -159,7 +159,7 @@ class Game:
                     loser=creature.get_name(),
                     loot=creature.get_move().name
                 ))
-                player.moves.append(creature.get_move())
+                player.add_move(creature.get_move())
                 self.creatures.pop(choice)
         elif choice == len(monsteroptions):
             print(text.leave_gym_report("You"))

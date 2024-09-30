@@ -16,6 +16,9 @@ class Player(Character):
         super().__init__()
         self.moves = [create_move(text.moves, "Kick")]
 
+    def add_move(self, move: Move):
+        self.moves.append(move)
+
     def set_name(self):
         self.name = input("Enter the name of user: ")
 
