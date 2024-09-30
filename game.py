@@ -81,58 +81,57 @@ class Game:
         elif isinstance(enemy, Monster):
             print(text.battle_report("You"), final=True)
 
-        while not enemy.is_dead():
-            print(text.creature_report(
-                name=enemy.get_name(),
-                hp=enemy.get_hp(),
-                attack=enemy.get_attack()
-            ))
-            print(text.player_report(
-                name="You",
-                hp=player.get_hp(),
-            ))
-            move = self.choose_move(player)
-            damage = self.attack(player, move, enemy)
-            if isinstance(move, moves.Flee):
-                if isinstance(enemy, Creature):
+        attacker, defender = player, enemy
+        while not attacker.is_dead():
+            if isinstance(attacker, Player):
+                print(text.creature_report(
+                    name=defender.get_name(),
+                    hp=defender.get_hp(),
+                    attack=defender.get_attack()
+                ))
+                print(text.player_report(
+                    name="You",
+                    hp=attacker.get_hp(),
+                ))
+            move = self.choose_move(attacker)
+            damage = self.attack(attacker, move, defender)
+            if isinstance(move, moves.Flee):  # assume only player can flee
+                if isinstance(defender, Creature):
                     print(text.flee_report("You"))
-                    creature.change_hp(creature.maxhp)
+                    defender.change_hp(defender.maxhp)
                     return False
-                elif isinstance(enemy, Monster):
+                elif isinstance(defender, Monster):
                     print(text.flee_report("You", fatal=True))
                     player.hp = 0
                     return False
-            print(text.attack_report(
-                name=player.get_name(),
-                move=move.get_name(),
-                damage=-int(damage),
-            ))
-            # If enemy killed
-            if enemy.is_dead():
-                if isinstance(enemy, Creature):
+            if isinstance(attacker, Player):
+                print(text.attack_report(
+                    name=attacker.get_name(),
+                    move=move.get_name(),
+                    damage=-int(damage),
+                ))
+            elif isinstance(attacker, Creature):
+                print(text.attack_report(
+                    name=attacker.get_name(),
+                    move=move.get_name(),
+                    damage=-int(damage)
+                ))
+            elif isinstance(attacker, Monster):
+                print(text.monster_attack_report(
+                    name=attacker.get_name(),
+                    damage=-int(damage)
+                ))
+
+            # If attacker or defender killed
+            if defender.is_dead():
+                if isinstance(defender, Creature):
                     break
-                if isinstance(enemy, Monster):
+                if isinstance(defender, Monster):
                     print(text.win_report("You"))
                     sys.exit(0)
-
-            # Continue battle
-            move = self.choose_move(enemy)
-            damage = self.attack(enemy, move, player)
-            if isinstance(enemy, Creature):
-                print(text.attack_report(
-                    name=enemy.get_name(),
-                    move=enemy.get_move().name,
-                    damage=enemy.get_attack()
-                ))
-                # player.change_hp(-enemy.get_attack())
-            else:
-                print(text.monster_attack_report(
-                    name=enemy.get_name(),
-                    damage=enemy.get_attack()
-                ))
-                # player.change_hp(-enemy.get_attack())
-            if player.is_dead():
+            elif player.is_dead():
                 return False
+            attacker, defender = defender, attacker
         return True
 
     def gym(self, player):
