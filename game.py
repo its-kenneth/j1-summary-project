@@ -93,6 +93,7 @@ class Game:
                     name="You",
                     hp=attacker.get_hp(),
                 ))
+
             move = self.choose_move(attacker)
             damage = self.attack(attacker, move, defender)
             if isinstance(move, moves.Flee):  # assume only player can flee
@@ -104,23 +105,12 @@ class Game:
                     print(text.flee_report("You", fatal=True))
                     player.hp = 0
                     return False
-            if isinstance(attacker, Player):
-                print(text.attack_report(
-                    name=attacker.get_name(),
-                    move=move.get_name(),
-                    damage=-int(damage),
-                ))
-            elif isinstance(attacker, Creature):
-                print(text.attack_report(
-                    name=attacker.get_name(),
-                    move=move.get_name(),
-                    damage=-int(damage)
-                ))
-            elif isinstance(attacker, Monster):
-                print(text.monster_attack_report(
-                    name=attacker.get_name(),
-                    damage=-int(damage)
-                ))
+
+            print(text.attack_report(
+                name=attacker.get_name(),
+                move=move.get_name(),
+                damage=-int(damage),
+            ))
 
             # If attacker or defender killed
             if defender.is_dead():

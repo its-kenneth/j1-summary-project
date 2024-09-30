@@ -150,9 +150,6 @@ def prompt_valid_choice(options: list[str], preamble: str, prompt: str):
 def attack_report(name: str, move: str, damage: int) -> str:
     return f"{name} used {move}! It dealt {damage} damage!"
 
-def monster_attack_report(name: str, damage: int) -> str:
-    return f"{name} lashed out! It dealt {damage} damage!"
-
 def creature_report(name: str, hp: int, attack: int) -> str:
     return f"{name} has {hp} HP left and {attack} attack."
 
