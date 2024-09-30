@@ -51,7 +51,7 @@ class Game:
         player.moves[choice].used_moves()
         return player.moves[choice], damage
 
-    def choose_move(self, character: Player | Creature | Monster) -> Move | str | None:
+    def choose_move(self, character: Player | Creature | Monster) -> Move:
         if isinstance(character, Player):
             choice = 0
             movenames = [move.get_name() for move in character.moves if move.can_use()]
@@ -64,14 +64,14 @@ class Game:
         elif isinstance(character, Creature):
             return character.get_move_dropped()
         elif isinstance(character, Monster):
-            return None
+            return character.get_move()
 
     def attack(
             self,
             attacker: Character,
-            move: Move | str | None,
+            move: Move,
             defender: Character
-        ) -> tuple[Move | str | None, int]:
+        ) -> tuple[Move, int]:
         if isinstance(attacker, Player):
             assert isinstance(move, Move)
             damage = -(attacker.get_attack() * move.get_multiplier())
@@ -127,7 +127,7 @@ class Game:
             if isinstance(enemy, Creature):
                 print(text.attack_report(
                     name=enemy.get_name(),
-                    move=enemy.get_move_dropped(),
+                    move=enemy.get_move_dropped().name,
                     damage=enemy.get_attack()
                 ))
                 player.change_hp(-enemy.get_attack())
@@ -157,11 +157,9 @@ class Game:
                 print(text.battle_report(
                     victor="You",
                     loser=creature.get_name(),
-                    loot=creature.get_move_dropped()
+                    loot=creature.get_move_dropped().name
                 ))
-                player.moves.append(
-                   create_move(text.moves, creature.get_move_dropped())
-                )
+                player.moves.append(creature.get_move_dropped())
                 self.creatures.pop(choice)
         elif choice == len(monsteroptions):
             print(text.leave_gym_report("You"))
