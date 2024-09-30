@@ -56,7 +56,7 @@ class Game:
         elif isinstance(enemy, Monster):
             print(text.battle_report("You"), final=True)
 
-        while enemy.is_dead():
+        while not enemy.is_dead():
             print(text.creature_report(
                 name=enemy.get_name(),
                 hp=enemy.get_hp(),
